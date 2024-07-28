@@ -4113,6 +4113,7 @@ def VGG16_Places365(weights_path=None):
     return model
 
 # Paths to the model and categories file
+#Please download the weights for Place365 model on your own and put it inside configuration folder
 WEIGHTS_PATH = 'configuration/vgg16-places365_weights_tf_dim_ordering_tf_kernels.h5'
 CATEGORIES_PATH = 'configuration/categories_places365_map.txt'
 
