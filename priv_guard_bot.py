@@ -4164,7 +4164,7 @@ async def handle_photo(message: types.Message):
                     file_url = f"https://api.telegram.org/file/bot{token}/{file_path}"
 
                     # Download the image
-                    image_folder = '/home/keyzia123/mysite/image'
+                    image_folder = 'image'
                     os.makedirs(image_folder, exist_ok=True)
                     unique_filename = f"{image_folder}/{file_id}.jpg"
                     urllib.request.urlretrieve(file_url, unique_filename)
@@ -4253,7 +4253,7 @@ async def handle_photo(message: types.Message):
 
                                         w, h = x2 - x1, y2 - y1
 
-                                        emoji = cv2.imread('/home/keyzia123/mysite/image/emoji.png', cv2.IMREAD_UNCHANGED)
+                                        emoji = cv2.imread('image/emoji.png', cv2.IMREAD_UNCHANGED)
                                         emoji_resized = cv2.resize(emoji, (w, h))
 
                                         # Check if emoji has an alpha channel
@@ -4343,7 +4343,7 @@ async def handle_photo(message: types.Message):
                                 file_path = file_info.file_path
                                 file_url = f"https://api.telegram.org/file/bot{token}/{file_path}"
                                 # Download the image
-                                image_folder = '/home/keyzia123/mysite/image'
+                                image_folder = 'image'
                                 os.makedirs(image_folder, exist_ok=True)
                                 unique_filename = f"{image_folder}/{file_id}.jpg"
                                 urllib.request.urlretrieve(file_url, unique_filename)
@@ -4433,7 +4433,7 @@ async def handle_photo(message: types.Message):
 
                                                         w, h = x2 - x1, y2 - y1
 
-                                                        emoji = cv2.imread('/home/keyzia123/mysite/image/emoji.png', cv2.IMREAD_UNCHANGED)
+                                                        emoji = cv2.imread('image/emoji.png', cv2.IMREAD_UNCHANGED)
                                                         emoji_resized = cv2.resize(emoji, (w, h))
 
                                                         # Check if emoji has an alpha channel
@@ -4549,7 +4549,7 @@ async def handle_document(message: types.Message):
 
                             if file_extension.lower() in ['jpg', 'jpeg', 'png']:
                                 # Prepare a folder to store images
-                                image_folder = '/home/keyzia123/mysite/image'
+                                image_folder = 'image'
                                 os.makedirs(image_folder, exist_ok=True)  # Ensure the directory exists
 
                                 # Define paths for the original and modified images
@@ -4619,7 +4619,7 @@ async def handle_document(message: types.Message):
 
                                     if file_extension.lower() in ['jpg', 'jpeg', 'png']:
                                         # Prepare a folder to store images
-                                        image_folder = '/home/keyzia123/mysite/image'
+                                        image_folder = 'image'
                                         os.makedirs(image_folder, exist_ok=True)  # Ensure the directory exists
 
                                         # Define paths for the original and modified images
