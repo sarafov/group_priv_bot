@@ -118,7 +118,6 @@ async def my_chat_m(message: types.ChatMemberUpdated):
                 json.dump(groups, file, indent=4)
 #-------------------END OF BOT JOIN GROUP HANDLER-------------------#
 
-
 #-------------------BOT NEW USER JOIN GROUP HANDLER--------------------------#
 @bot.chat_member_handler()
 async def new_chat_member_handler(message: types.ChatMemberUpdated):
@@ -128,7 +127,7 @@ async def new_chat_member_handler(message: types.ChatMemberUpdated):
         new_user_name = new.user.username
         group_chat_id = str(message.chat.id)
 
-        welcome_message = f"Welcome to user study group chat,  @{new_user_name}.\nPlease click this {bot_username} and then click START to allow your interaction with the privacy bot."
+        welcome_message = f"Welcome @{new_user_name}.\nI am Privacy Bot To Help You Managing Your Privacy in This Group.\nPlease click this {bot_username} and then click START to interact with the privacy bot."
         await bot.send_message(
                     group_chat_id,
                     formatting.format_text(
@@ -147,7 +146,7 @@ async def member_left_handler(message: types.ChatMemberUpdated):
         group_chat_id = str(message.chat.id)
         user_id = str(message.left_chat_member.id)
         remove_user_data(group_chat_id, user_id)
-        await bot.send_message(message.left_chat_member.id, f"Thank you for participating in user study.\nYour contribution hopefully will make Telegram a safer place for everyone.\n\nBest Regards,\nPrivacy Bot Team")
+        await bot.send_message(message.left_chat_member.id, f"Thank you for your participation in previous group.\nIf you want to manage your privacy in another group, please add me later.\nBest Regards,\nPrivacy Bot")
 
 def remove_user_data(group_id, user_id):
     try:
@@ -172,6 +171,80 @@ async def start_command(message):
     if message.chat.type == 'private':
         await bot.send_message(message.chat.id, "Welcome to privacy bot!\nPlease use /privacy_setting command from the group chat to activate your personalized privacy setting")
 #-------------------END OF BOT COMMAND START HANDLER-------------------#
+
+#----BOT COMMAND HELP HANDLER----#
+@bot.message_handler(commands=['help'])
+async def start_command(message):
+    if message.chat.type == 'private':
+        await bot.send_message(
+                    message.from_user.id,
+                    formatting.format_text(
+                        formatting.munderline("--PRIVACY BOT HELP--"),
+                        "Here is the list of all commands that you can use:",
+                        escape_markdown_v2("1. /help : To view the list of all available commands."),
+                        escape_markdown_v2("2. /privacy_setting : To TURN ON / TURN OFF your personalized privacy setting and view summary of your privacy preference."),
+                        escape_markdown_v2("3. /location : To TURN ON / TURN OFF location breach prevention, and configure the details."),
+                        escape_markdown_v2(">> Location in Image Content : Perform scenery recognition to prevent sharing image detected in private or public location."),
+                        escape_markdown_v2(">> Location Sharing : Prevent location sharing in chat."),
+                        escape_markdown_v2(">> Location Metadata in Document (Raw Image) : Remove location information from RAW Image Files."),
+                        escape_markdown_v2("4. /face : To TURN ON / TURN OFF human face detection in image, and choose whether to remove image, blur the face, or edit the face with emoji."),
+                        escape_markdown_v2("5. /negative_sentiment : To TURN ON / TURN OFF negative sentiment prevention in chat, and configure the negative sentiment categories."),
+                        escape_markdown_v2(">> Categories: All, Obscene, Threatening, Insulting, Identity Attack, and Sexual Explicit."),
+                        escape_markdown_v2("6. /link : To TURN ON / TURN OFF link preview prevention in chat."),
+                        escape_markdown_v2("7. /contact : To TURN ON / TURN OFF contact sharing prevention in chat."),
+                        separator="\n"  # separator separates all strings
+                    ),
+                    parse_mode='MarkdownV2'
+        )  
+    elif message.chat.type == 'group' or message.chat.type == 'supergroup':
+        # Check if the user is an administrator or owner
+        if message.from_user.id in [admin.user.id for admin in await bot.get_chat_administrators(message.chat.id)]:
+            await bot.send_message(
+                        message.from_user.id,
+                        formatting.format_text(
+                            formatting.munderline("--PRIVACY BOT HELP--"),
+                            "Here is the list of all commands that you can use:",
+                            escape_markdown_v2("1. /activation : To TURN ON / TURN OFF the privacy bot in the group chat."),
+                            escape_markdown_v2("2. /global : To set the privacy bot mode to GLOBAL or PERSONALIZED."),
+                            escape_markdown_v2(">> In GLOBAL mode, the privacy configuration will be applied to all members in the group chat."),
+                            escape_markdown_v2(">> In PERSONALIZED mode, everyone can configure their own privacy preference via /privacy_setting command."),
+                            escape_markdown_v2("3. /help : To view the list of all available commands."),
+                            escape_markdown_v2("4. /privacy_setting : To TURN ON / TURN OFF your personalized privacy setting and view summary of your privacy preference."),
+                            escape_markdown_v2("5. /location : To TURN ON / TURN OFF location breach prevention, and configure the details."),
+                            escape_markdown_v2(">> Location in Image Content : Perform scenery recognition to prevent sharing image detected in private or public location."),
+                            escape_markdown_v2(">> Location Sharing : Prevent location sharing in chat."),
+                            escape_markdown_v2(">> Location Metadata in Document (Raw Image) : Remove location information from RAW Image Files."),
+                            escape_markdown_v2("6. /face : To TURN ON / TURN OFF human face detection in image, and choose whether to remove image, blur the face, or edit the face with emoji."),
+                            escape_markdown_v2("7. /negative_sentiment : To TURN ON / TURN OFF negative sentiment prevention in chat, and configure the negative sentiment categories."),
+                            escape_markdown_v2(">> Categories: All, Obscene, Threatening, Insulting, Identity Attack, and Sexual Explicit."),
+                            escape_markdown_v2("8. /link : To TURN ON / TURN OFF link preview prevention in chat."),
+                            escape_markdown_v2("9. /contact : To TURN ON / TURN OFF contact sharing prevention in chat."),
+                            separator="\n"  # separator separates all strings
+                        ),
+                        parse_mode='MarkdownV2'
+            )
+        else:
+            await bot.send_message(
+                        message.from_user.id,
+                        formatting.format_text(
+                            formatting.munderline("--PRIVACY BOT HELP--"),
+                            "Here is the list of all commands that you can use:",
+                            escape_markdown_v2("1. /help : To view the list of all available commands."),
+                            escape_markdown_v2("2. /privacy_setting : To TURN ON / TURN OFF your personalized privacy setting and view summary of your privacy preference."),
+                            escape_markdown_v2("3. /location : To TURN ON / TURN OFF location breach prevention, and configure the details."),
+                            escape_markdown_v2(">> Location in Image Content : Perform scenery recognition to prevent sharing image detected in private or public location."),
+                            escape_markdown_v2(">> Location Sharing : Prevent location sharing in chat."),
+                            escape_markdown_v2(">> Location Metadata in Document (Raw Image) : Remove location information from RAW Image Files."),
+                            escape_markdown_v2("4. /face : To TURN ON / TURN OFF human face detection in image, and choose whether to remove image, blur the face, or edit the face with emoji."),
+                            escape_markdown_v2("5. /negative_sentiment : To TURN ON / TURN OFF negative sentiment prevention in chat, and configure the negative sentiment categories."),
+                            escape_markdown_v2(">> Categories: All, Obscene, Threatening, Insulting, Identity Attack, and Sexual Explicit."),
+                            escape_markdown_v2("6. /link : To TURN ON / TURN OFF link preview prevention in chat."),
+                            escape_markdown_v2("7. /contact : To TURN ON / TURN OFF contact sharing prevention in chat."),
+                            separator="\n"  # separator separates all strings
+                        ),
+                        parse_mode='MarkdownV2'
+            )
+#----END OF BOT COMMAND HELP HANDLER----#
 
 #-------------------BOT COMMAND ACTIVATION HANDLER-------------------#
 @bot.message_handler(commands=['activation'])
