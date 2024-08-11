@@ -602,16 +602,26 @@ async def personalized_command(message):
                             face = user_setting['face']
                             face_setting = ["OFF", "ON (Remove Image)", "ON (Blur Face)", "ON (Emoji Face)"][face]
 
-                            location = user_setting['location']['value']
-                            location_setting = f"3. Location breach prevention : {'ON' if location == 1 else 'OFF'}"
-                            if location == 1:
-                                location_details = ", ".join([
-                                    "Private Location in Image Content" if attribute == "image" and user_setting['location']['details'][attribute] == 1 else
-                                    "Public Location in Image Content" if attribute == "image" and user_setting['location']['details'][attribute] == 1 else
-                                    "Location Sharing" if attribute == "location_only" and user_setting['location']['details'][attribute] == 1 else
-                                    "Location Metadata in Document (Raw Image)" for attribute in user_setting['location']['details']
-                                ])
-                                location_setting += f" ({location_details})"
+		            # location setting
+		            location = user_setting['location']['value']
+		            location_setting = ''
+		            if location == 1:
+		                location_details = []
+		                for attribute, value in user_setting['location']['details'].items():
+		                    if attribute == "image":
+		                        if value == 1:
+		                            location_details.append("Private Location in Image Content")
+		                        elif value == 2:
+		                            location_details.append("Public Location in Image Content")
+		                    elif attribute == "location_only" and value == 1:
+		                        location_details.append("Location Sharing")
+		                    elif attribute == "document" and value == 1:
+		                        location_details.append("Location Metadata in Document (Raw Image)")
+		                
+		                # Join the location details with a comma and space
+		                location_setting = f"3. Location breach prevention : ON ({', '.join(location_details)})"
+		            else:
+		                location_setting = "3. Location breach prevention : OFF"
 
                             link = user_setting['link']
                             link_setting = f"4. Link preview prevention in chat : {'ON' if link == 1 else 'OFF'}"
@@ -733,21 +743,24 @@ async def personalized_on_callback(call):
             else:
                 face_setting =  "2. Human face prevention in image : ON (Emoji Face)"
 
-            #location setting
+            # location setting
             location = user_setting['location']['value']
             location_setting = ''
             if location == 1:
-                location_details = ""
-                for attribute in user_setting['location']['details']:
-                    if attribute == "image" and user_setting['location']['details'][attribute] == 1:
-                        location_details += "Private Location in Image Content, "
-                    elif attribute == "image" and user_setting['location']['details'][attribute] == 1:
-                        location_details += "Public Location in Image Content, "
-                    elif attribute == "location_only" and user_setting['location']['details'][attribute] == 1:
-                        location_details += "Location Sharing, "
-                    elif attribute == "document" and user_setting['location']['details'][attribute] == 1:
-                        location_details += "Location Metadata in Document (Raw Image)"
-                location_setting = f"3. Location breach prevention : ON ({location_details})"
+                location_details = []
+                for attribute, value in user_setting['location']['details'].items():
+                    if attribute == "image":
+                        if value == 1:
+                            location_details.append("Private Location in Image Content")
+                        elif value == 2:
+                            location_details.append("Public Location in Image Content")
+                    elif attribute == "location_only" and value == 1:
+                        location_details.append("Location Sharing")
+                    elif attribute == "document" and value == 1:
+                        location_details.append("Location Metadata in Document (Raw Image)")
+                
+                # Join the location details with a comma and space
+                location_setting = f"3. Location breach prevention : ON ({', '.join(location_details)})"
             else:
                 location_setting = "3. Location breach prevention : OFF"
 
