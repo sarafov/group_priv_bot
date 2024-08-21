@@ -8,9 +8,9 @@ To start the `@group_priv_bot`, a bot to manage privacy within Telegram group ch
 python priv_guard_bot.py
 ```
 
-This will start the @group_priv bot, enabling the full functionality of the privacy bot.
+This will start the @group_priv_bot, enabling the full functionality of the privacy bot.
 
-### Included Libraries
+### Requirement Libraries
 
 - **Flask**: A micro web framework.
 - **Telebot**: Used for creating Telegram bots.
